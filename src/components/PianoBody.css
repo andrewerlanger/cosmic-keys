@@ -1,0 +1,43 @@
+.piano-body-top {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.speakers {
+  width: 200px;
+  height: 5px;
+  background: #000;
+  margin: 40px 0 0;
+  box-shadow: 0 15px #000, 0 30px #000, 0 45px #000, 0 60px #000, 0 75px #000;
+}
+
+@media (max-width: 600px) {
+  .speakers {
+    display: none;
+  }
+  .piano-body-top {
+    justify-content: center;
+  }
+}
+
+#dashboard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.piano-body-bottom {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+#keyboard {
+  width: 90%;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: center;
+}
