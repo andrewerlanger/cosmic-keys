@@ -1,29 +1,8 @@
 import React from 'react';
 import Keyboard from './components/Keyboard';
 
-// import SoundfontProvider from './SoundfontProvider';
-// import DimensionsProvider from './DimensionsProvider';
-
-// import MidiNumbers from './components/MidiNumbers';
-// import KeyboardShortcuts from './components/KeyboardShortcuts';
-
 const DURATION_UNIT = 0.2;
 const DEFAULT_NOTE_DURATION = DURATION_UNIT;
-
-// const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-// const soundfontHostname = 'https://d1pzp51pvbm36p.cloudfront.net';
-
-// const noteRange = {
-//   first: MidiNumbers.fromNote('c3'),
-//   last: MidiNumbers.fromNote('c5'),
-// };
-
-// const keyboardShortcuts = KeyboardShortcuts.create({
-//   firstNote: noteRange.first,
-//   lastNote: noteRange.last,
-//   keyboardConfig: KeyboardShortcuts.HOME_ROW,
-// });
-
 
 class KeyboardWithRecording extends React.Component {
   static defaultProps = {
@@ -80,7 +59,6 @@ class KeyboardWithRecording extends React.Component {
     const { mode, currentEvents } = this.props.recording;
     const activeNotes =
       mode === 'PLAYING' ? currentEvents.map(event => event.midiNumber) : null;
-
     return (
       <div>
         <Keyboard

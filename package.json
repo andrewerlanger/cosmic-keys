@@ -5,6 +5,7 @@
   "dependencies": {
     "classnames": "^2.2.6",
     "just-range": "^2.1.0",
+    "lodash": "^4.17.11",
     "lodash.difference": "^4.5.0",
     "prop-types": "^15.6.2",
     "react": "^16.6.3",

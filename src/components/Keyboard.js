@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
-import difference from 'lodash.difference';
+// import classNames from 'classnames';
+// import difference from 'lodash.difference';
 import ControlledKeyboard from './ControlledKeyboard';
-import Keys from './Keys';
+// import Keys from './Keys';
 
 class Keyboard extends React.Component {
   static propTypes = {

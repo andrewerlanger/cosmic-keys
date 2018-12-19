@@ -1,0 +1,71 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width:100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 2;
+}
+
+.modal-main {
+  position:fixed;
+  background: white;
+  width: 30%;
+  height: auto;
+  top:36%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  padding: 20px;
+  border-radius: 3px;
+}
+
+.modal-main h2 {
+  margin: 0;
+  padding: 0;
+  margin-bottom: 18px;
+}
+
+.display-block {
+  display: block;
+}
+
+.display-none {
+  display: none;
+}
+
+.close-modal {
+  text-align: right;
+  padding-top: 10px;
+  padding-right: 10px;
+}
+
+.close-modal:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+.song-item {
+  display: flex;
+  justify-content: left;
+  align-items: bottom;
+}
+
+.round-button__modal {
+  height: 15px;
+  width: 15px;
+  background: #C2A061;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 9px;
+}
+
+.round-button__modal > i {
+  font-size: 0.4rem;
+  opacity: 0.85;
+  padding-left: 1px;
+  padding-top: 2px;
+}
+
+
