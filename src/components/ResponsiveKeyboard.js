@@ -1,24 +1,15 @@
 import React from 'react';
-// import ReactDOM from 'react-dom';
-// import PropTypes from 'prop-types';
-// import Soundfont from 'soundfont-player';
 import _ from 'lodash';
 
-import './index.css';
-
-// import App from './App';
-// import PianoBody from './components/PianoBody';
-// import Dashboard from './components/Dashboard';
-// import Keyboard from './components/Keyboard';
-import MidiNumbers from './components/MidiNumbers';
-import KeyboardShortcuts from './components/KeyboardShortcuts';
-import Modal from './components/Modal';
-
+import MidiNumbers from './MidiNumbers';
+import KeyboardShortcuts from './KeyboardShortcuts';
+import SaveModal from './SaveModal';
+import LibraryModal from './LibraryModal';
 import SoundfontProvider from './SoundfontProvider';
 import DimensionsProvider from './DimensionsProvider';
 import KeyboardWithRecording from './KeyboardWithRecording';
 
-// import * as serviceWorker from './serviceWorker';
+import '../index.css';
 
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 const soundfontHostname = 'https://d1pzp51pvbm36p.cloudfront.net';
@@ -42,8 +33,10 @@ class ResponsiveKeyboard extends React.Component {
       currentTime: 0,
       currentEvents: [],
     },
-    show: false,
+    showLibraryModal: false,
+    showSaveModal: false,
     savedEvents: {},
+    savedNames: [],
     eventId: 0,
   };
 
@@ -53,12 +46,67 @@ class ResponsiveKeyboard extends React.Component {
     this.scheduledEvents = [];
   }
 
-  showModal = () => {
-      this.setState({ show: true });
+  componentDidMount() {
+    // Initialize dashboard buttons
+    const recordButton = document.getElementById('record-button');
+    const libraryButton = document.getElementById('library-button');
+    const infoButton = document.getElementById('info-button');
+
+    // Record button
+    recordButton.addEventListener('click', (event) => {
+      // Update styles
+      event.target.classList.toggle("round-button__active");
+      event.target.classList.toggle("round-button__flash");
+      // Start/stop recording
+      let currentMode = this.state.recording.mode;
+      if (currentMode === 'RECORDING') {
+        this.setMode("OFF");
+        this.showSaveModal();
+      }
+      else {
+        this.setMode('RECORDING');
+      }
+    });
+
+    // Library button
+    libraryButton.addEventListener('click', (event) => {
+      event.target.classList.toggle("round-button__active");
+      this.showLibraryModal();
+    });
+
+    // Info button
+    infoButton.addEventListener('click', (event) => {
+      event.target.classList.toggle("round-button__active");
+      const allLabels = document.querySelectorAll(".ReactPiano__NoteLabelContainer");
+      allLabels.forEach((label) => {
+        label.classList.toggle("HideNoteLabels");
+      });
+
+    })
+  }
+
+  showSaveModal = () => {
+    this.clearSaveInput();
+    this.setState({ showSaveModal: true });
     };
 
-  hideModal = () => {
-      this.setState({ show: false });
+  hideSaveModal = () => {
+      this.setState({ showSaveModal: false });
+      this.clearEvents();
+      this.state.recording.currentTime = 0;
+    };
+
+  clearSaveInput = () => {
+    const saveInputField = document.getElementById("save-input");
+    saveInputField.value = "";
+  };
+
+  showLibraryModal = () => {
+      this.setState({ showLibraryModal: true });
+    };
+
+  hideLibraryModal = () => {
+      this.setState({ showLibraryModal: false });
       const libraryButton = document.getElementById('library-button');
       libraryButton.classList.toggle("round-button__active");
     };
@@ -72,57 +120,6 @@ class ResponsiveKeyboard extends React.Component {
     );
   };
 
-  componentDidMount() {
-
-    const recordButton = document.getElementById('record-button');
-    const libraryButton = document.getElementById('library-button');
-    const infoButton = document.getElementById('info-button');
-
-    // Record button
-    recordButton.addEventListener('click', (event) => {
-
-      // Update styles onclick
-      event.target.classList.toggle("round-button__active");
-      event.target.classList.toggle("round-button__flash");
-
-      // Start/stop recording
-      let currentMode = this.state.recording.mode;
-      if (currentMode === 'RECORDING') {
-        this.setMode("OFF");
-        this.saveRecording();
-      }
-      else {
-        // this.onClickStop();
-        this.setMode('RECORDING');
-      }
-    });
-
-    // Library button
-    libraryButton.addEventListener('click', (event) => {
-
-      // Update styles onclick
-      event.target.classList.toggle("round-button__active");
-
-      // Show modal
-      this.showModal();
-
-    });
-
-    // Info button
-    infoButton.addEventListener('click', (event) => {
-
-      // Update styles onclick
-      event.target.classList.toggle("round-button__active");
-
-      // Show/hide labels
-      const allLabels = document.querySelectorAll(".ReactPiano__NoteLabelContainer");
-      allLabels.forEach((label) => {
-        label.classList.toggle("HideNoteLabels");
-      });
-
-    })
-  }
-
   setMode = value => {
     this.setState({
       recording: { ...this.state.recording, mode: value}
@@ -131,13 +128,7 @@ class ResponsiveKeyboard extends React.Component {
 
   clearEvents = () => {
     this.setState({
-      recording: { ...this.state.recording, events: []}
-    });
-  };
-
-  resetCurrentTime = () => {
-    this.setState({
-      recording: { ...this.state.recording, currentTime: 0}
+      recording: { ...this.state.recording, events: new Array()}
     });
   };
 
@@ -152,20 +143,19 @@ class ResponsiveKeyboard extends React.Component {
     });
   };
 
-  saveRecording = () => {
+  onClickSave = () => {
+    const songName = document.getElementById('save-input').value;
     const id = this.state.eventId;
     const events = this.state.recording.events;
     this.state.savedEvents[id] = events;
+    this.state.savedNames[id] = songName;
     this.scheduledEvents.push([]);
-    this.clearEvents();
-    this.resetCurrentTime();
+    this.hideSaveModal();
     this.updateEventId();
-  }
+  };
 
   onClickPlay = (id) => {
-    this.setRecording({
-      mode: 'PLAYING',
-    });
+    this.setMode('PLAYING');
     const startAndEndTimes = _.uniq(
       _.flatMap(this.state.savedEvents[id], event => [
         event.time,
@@ -178,12 +168,19 @@ class ResponsiveKeyboard extends React.Component {
           const currentEvents = this.state.savedEvents[id].filter(event => {
             return event.time <= time && event.time + event.duration > time;
           });
+
+          // toggle mode to OFF after playback
+          if (currentEvents.length === 0) {
+            this.setMode('OFF');
+          }
+
           this.setRecording({
             currentEvents,
           });
         }, time * 1000),
       );
     });
+
     // Stop at the end
     setTimeout(() => {
       this.onClickStop();
@@ -195,10 +192,13 @@ class ResponsiveKeyboard extends React.Component {
       clearTimeout(scheduledEvent);
     });
     this.setRecording({
-      // mode: 'RECORDING',
       currentEvents: [],
     });
   };
+
+  checkForModal = () => {
+    return this.state.showSaveModal || this.state.showLibraryModal;
+  }
 
   render() {
     return (
@@ -219,17 +219,24 @@ class ResponsiveKeyboard extends React.Component {
                   stopNote={stopNote}
                   disabled={isLoading}
                   keyboardShortcuts={keyboardShortcuts}
-                  containerStyle="width: 100px"
+                  modalDisplayed={this.checkForModal}
                 />
               )}
             />
           )}
         </DimensionsProvider>
-        <Modal
-        show={this.state.show}
-        handleClose={this.hideModal}
+        <LibraryModal
+        show={this.state.showLibraryModal}
+        handleClose={this.hideLibraryModal}
         savedEvents={this.state.savedEvents}
+        savedNames={this.state.savedNames}
         play={this.onClickPlay}
+        />
+
+        <SaveModal
+        show={this.state.showSaveModal}
+        handleClose={this.hideSaveModal}
+        getName={this.onClickSave}
         />
       </React.Fragment>
     );

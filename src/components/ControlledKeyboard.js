@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import difference from 'lodash.difference';
+
 import Keys from './Keys';
 
-import './Keyboard_ALL.css';
+import './AllKeyboardStyles.css';
 
 class ControlledKeyboard extends React.Component {
   static propTypes = {
@@ -18,6 +19,7 @@ class ControlledKeyboard extends React.Component {
     className: PropTypes.string,
     disabled: PropTypes.bool,
     width: PropTypes.number,
+    modalDisplayed: PropTypes.func.isRequired,
     keyWidthToHeight: PropTypes.number,
     keyboardShortcuts: PropTypes.arrayOf(
       PropTypes.shape({
@@ -66,8 +68,6 @@ class ControlledKeyboard extends React.Component {
     }
   }
 
-  // This function is responsible for diff'ing activeNotes
-  // and playing or stopping notes accordingly.
   handleNoteChanges = ({ prevActiveNotes, nextActiveNotes }) => {
     if (this.props.disabled) {
       return;
@@ -102,21 +102,18 @@ class ControlledKeyboard extends React.Component {
 
   onKeyDown = (event) => {
     // Don't conflict with existing combinations like ctrl + t
-    if (event.ctrlKey || event.metaKey || event.shiftKey) {
-      return;
-    }
-    const midiNumber = this.getMidiNumberForKey(event.key);
-    if (midiNumber) {
-      this.onPlayNoteInput(midiNumber);
+    if (!this.props.modalDisplayed()) {
+      if (event.ctrlKey || event.metaKey || event.shiftKey) {
+        return;
+      }
+      const midiNumber = this.getMidiNumberForKey(event.key);
+      if (midiNumber) {
+        this.onPlayNoteInput(midiNumber);
+      }
     }
   };
 
   onKeyUp = (event) => {
-    // This *should* also check for event.ctrlKey || event.metaKey || event.ShiftKey like onKeyDown does,
-    // but at least on Mac Chrome, when mashing down many alphanumeric keystrokes at once,
-    // ctrlKey is fired unexpectedly, which would cause onStopNote to NOT be fired, which causes problematic
-    // lingering notes. Since it's fairly safe to call onStopNote even when not necessary,
-    // the ctrl/meta/shift check is removed to fix that issue.
     const midiNumber = this.getMidiNumberForKey(event.key);
     if (midiNumber) {
       this.onStopNoteInput(midiNumber);

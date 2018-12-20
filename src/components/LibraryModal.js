@@ -1,16 +1,15 @@
 import React from 'react';
-// import ReactDOM from 'react-dom';
-// import _ from 'lodash';
 import PropTypes from 'prop-types';
 
 import './Modal.css'
 import './Dashboard.css'
 
-class Modal extends React.Component {
+class LibraryModal extends React.Component {
   static propTypes = {
     show: PropTypes.bool.isRequired,
     handleClose: PropTypes.func.isRequired,
     play: PropTypes.func,
+    savedNames: PropTypes.arrayOf(PropTypes.string),
     savedEvents: PropTypes.shape({
       id: PropTypes.string,
       fontSize: PropTypes.arrayOf(
@@ -26,17 +25,17 @@ class Modal extends React.Component {
   render() {
     const showHideClassName = this.props.show ? "modal display-block" : "modal display-none";
 
-    const songNames = [];
+    const songIds = [];
     for (const key of Object.keys(this.props.savedEvents)) {
-      songNames.push(parseInt(key, 10));
+      songIds.push(parseInt(key, 10));
     }
 
     return (
-      <div className={showHideClassName}>
+      <div id ="save-modal" className={showHideClassName}>
         <section className="modal-main">
           <div className="close-modal" onClick={this.props.handleClose}>x</div>
-            <h2> your library</h2>
-            {songNames.map((id) => {
+            <h2>your library</h2>
+            {songIds.map((id) => {
               return (
                 <React.Fragment key={id}>
                   <div className="song-item">
@@ -48,7 +47,7 @@ class Modal extends React.Component {
                       }>
                       <i className="fas fa-play"></i>
                     </button>
-                    <p>song {id + 1}</p>
+                    <p>{this.props.savedNames[id]}</p>
                   </div>
                 </React.Fragment>
                 )
@@ -59,33 +58,4 @@ class Modal extends React.Component {
   }
 }
 
-export default Modal;
-
-
-// const Modal = ({ handleClose, show, savedEvents }) => {
-
-//   const showHideClassName = show ? "modal display-block" : "modal display-none";
-
-//   console.log(savedEvents);
-
-//   const songNames = [];
-//   for (const key of Object.keys(savedEvents)) {
-//     songNames.push(parseInt(key, 10));
-//   }
-
-//   return (
-//     <div className={showHideClassName}>
-//       <section className="modal-main">
-//         <div className="close-modal" onClick={handleClose}>x</div>
-//           <h2> your library</h2>
-//           {songNames.map((song) => {
-//             return (
-//               <React.Fragment>
-//                 <p>song {song + 1}</p>
-//               </React.Fragment>
-//             );
-//           })}
-//       </section>
-//     </div>
-//   );
-// };
+export default LibraryModal;

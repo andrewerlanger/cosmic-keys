@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import MidiNumbers from './MidiNumbers';
 
-import './Keyboard_ALL.css';
+import './AllKeyboardStyles.css';
 
 class Key extends React.Component {
   static propTypes = {

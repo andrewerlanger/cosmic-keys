@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import classNames from 'classnames';
-// import difference from 'lodash.difference';
+
 import ControlledKeyboard from './ControlledKeyboard';
-// import Keys from './Keys';
 
 class Keyboard extends React.Component {
   static propTypes = {
@@ -17,6 +15,7 @@ class Keyboard extends React.Component {
     className: PropTypes.string,
     disabled: PropTypes.bool,
     width: PropTypes.number,
+    modalDisplayed: PropTypes.func.isRequired,
     keyWidthToHeight: PropTypes.number,
     keyboardShortcuts: PropTypes.arrayOf(
       PropTypes.shape({
@@ -31,8 +30,6 @@ class Keyboard extends React.Component {
   };
 
   componentDidUpdate(prevProps) {
-    // Make activeNotes "controllable" by using internal
-    // state by default, but allowing prop overrides.
     if (
       prevProps.activeNotes !== this.props.activeNotes &&
       this.state.activeNotes !== this.props.activeNotes
@@ -74,6 +71,7 @@ class Keyboard extends React.Component {
         activeNotes={this.state.activeNotes}
         onPlayNoteInput={this.handlePlayNoteInput}
         onStopNoteInput={this.handleStopNoteInput}
+        modalDisplayed={this.checkForModal}
         {...otherProps}
       />
     );

@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import Key from './Key';
 import MidiNumbers from './MidiNumbers';
 
-import './Keyboard_ALL.css';
+import './AllKeyboardStyles.css';
 
 class Keys extends React.Component {
   static propTypes = {
@@ -20,7 +20,6 @@ class Keys extends React.Component {
     disabled: PropTypes.bool,
     gliss: PropTypes.bool,
     useTouchEvents: PropTypes.bool,
-    // If width is not provided, must have fixed width and height in parent container
     width: PropTypes.number,
   };
 
