@@ -1,3 +1,10 @@
+/**
+ * MidiNumbers.js
+ *
+ * From react-piano (iqnivek):
+ * https://github.com/iqnivek/react-piano/blob/master/src/MidiNumbers.js
+ */
+
 import range from 'just-range';
 
 const SORTED_PITCHES = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];

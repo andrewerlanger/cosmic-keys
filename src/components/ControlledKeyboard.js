@@ -1,3 +1,10 @@
+/**
+ * ControlledKeyboard.js
+ *
+ * Adapted from react-piano (iqnivek):
+ * https://github.com/iqnivek/react-piano/blob/master/src/ControlledPiano.js
+ */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';

@@ -1,3 +1,10 @@
+/**
+ * KeyboardWithRecording.js
+ *
+ * Adapted from react-piano (iqnivek):
+ * https://codesandbox.io/s/l4jjvzmp47
+ */
+
 import React from 'react';
 import Keyboard from './Keyboard';
 import PropTypes from 'prop-types';

@@ -3,27 +3,6 @@ import './Dashboard.css';
 
 class Dashboard extends React.Component {
 
-  // onClickRecord = (event) => {
-
-  //   // Toggle active/inactive button design
-  //   event.target.classList.toggle("round-button__active");
-    // event.target.classList.toggle("round-button__flash");
-
-  //   // Start actually recording...
-  // }
-
-  // onClickLibrary = (event) => {
-  //   event.target.classList.toggle("round-button__active");
-  // }
-
-  // onClickLabels = (event) => {
-  //   event.target.classList.toggle("round-button__active");
-  //   const allLabels = document.querySelectorAll(".ReactPiano__NoteLabelContainer");
-  //   allLabels.forEach((label) => {
-  //     label.classList.toggle("HideNoteLabels");
-  //   })
-  // }
-
   render() {
     return (
       <React.Fragment>

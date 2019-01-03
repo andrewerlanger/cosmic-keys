@@ -1,3 +1,10 @@
+/**
+ * RecordAudio.js
+ *
+ * From react-piano (iqnivek):
+ * https://codesandbox.io/s/l4jjvzmp47
+ */
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import _ from 'lodash';

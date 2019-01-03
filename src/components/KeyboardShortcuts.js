@@ -1,3 +1,10 @@
+/**
+ * KeyboardShortcuts.js
+ *
+ * From react-piano (iqnivek):
+ * https://github.com/iqnivek/react-piano/blob/master/src/Keyboard.js
+ */
+
 import MidiNumbers from './MidiNumbers';
 
 function createKeyboardShortcuts({ firstNote, lastNote, keyboardConfig }) {

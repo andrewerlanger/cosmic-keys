@@ -1,3 +1,10 @@
+/**
+ * Keyboard.js
+ *
+ * Adapted from react-piano (iqnivek):
+ * https://github.com/iqnivek/react-piano/blob/master/src/Keyboard.js
+ */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 

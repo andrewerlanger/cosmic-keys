@@ -1,5 +1,10 @@
-// See https://github.com/danigb/soundfont-player
-// for more documentation on prop options.
+/**
+ * SoundfontProvider.js
+ *
+ * From soundfont-player (danigb), via react-piano (iqnivek):
+ * https://github.com/danigb/soundfont-player
+ */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import Soundfont from 'soundfont-player';

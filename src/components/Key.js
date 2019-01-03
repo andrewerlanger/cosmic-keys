@@ -1,3 +1,10 @@
+/**
+ * Key.js
+ *
+ * From react-piano (iqnivek):
+ * https://github.com/iqnivek/react-piano/blob/master/src/Key.js
+ */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';

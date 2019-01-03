@@ -1,3 +1,10 @@
+/**
+ * DimensionsProvider.js
+ *
+ * From react-piano (iqnivek):
+ * https://github.com/iqnivek/react-piano/blob/master/demo/src/DimensionsProvider.js
+ */
+
 import React from 'react';
 import Dimensions from 'react-dimensions';
 
